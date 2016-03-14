@@ -1,0 +1,24 @@
+<div class='spacer'>
+
+</div>
+<div ng-controller='LoginController as LC'>
+  <div class='login'>
+    <div ng-show='LC.loginExpanded'>
+      <form class='loginBox'>
+        <input type='text' ng-model='username' placeholder='Username' class='loginField'>
+        <input type='text' ng-model='password' placeholder='Password' class='loginField'>
+        <button type='submit' ng-click='LC.loginSubmit(username, password)'>Signin</button>
+      </form>
+    </div>
+    <div class='loginButton' ng-click='LC.expandLogin()'>Signin</div>
+  </div>
+  <div class='signup'>
+    <div class='signupButton' ng-click='LC.expandSignup()'>Signup</div>
+    <div ng-show='LC.signupExpanded'>
+      <form class='signupBox'>
+        <input type='text' ng-model='username' placeholder='Username' class='signupField'>
+        <input type='text' ng-model='password' placeholder='Password' class='signupField'>
+      </form>
+    </div>
+  </div>
+</div>

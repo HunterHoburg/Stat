@@ -1,0 +1,56 @@
+/* Universal Classes */
+.title {
+  text-align: center;
+  color: #95d565;
+}
+
+/* Classes for Splash Page */
+
+/*Test*/
+.spacer {
+  width: 200px;
+  height: 100px
+}
+
+.login {
+  text-align: center;
+}
+.loginButton {
+  /*position: absolute;*/
+  margin-top: 5rem;
+  background-color: #87c0e9;
+  color: #f6f6f6;
+  width: 30%;
+  height: 2rem;
+  margin-left: 35%;
+  text-align: center;
+  border-radius: 8px;
+}
+.loginBox {
+  text-align: center;
+}
+.loginField {
+  margin-left: 30%;
+  text-align: center;
+}
+.signupButton {
+  /*position: absolute;*/
+  margin-top: 5rem;
+  background-color: #ade987;
+  color: #f6f6f6;
+  width: 30%;
+  height: 2rem;
+  margin-left: 35%;
+  text-align: center;
+  border-radius: 8px;
+}
+.signup {
+  text-align: center;
+}
+.signupBox {
+  text-align: center;
+}
+.signupField {
+  margin-left: 30%;
+  text-align: center;
+}

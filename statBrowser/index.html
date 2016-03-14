@@ -1,0 +1,27 @@
+<!DOCYTPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <link rel='stylesheet' href='./assets/styles/styles.css'>
+  <title>Stat</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+  <script src='./assets/js/app.js'></script>
+  <script src='./assets/js/controllers.js'></script>
+  <script src='./assets/js/services.js'></script>
+  <script src='./assets/js/directives.js'></script>
+</head ng-app='stattest'>
+<body ng-app='stattest'>
+  <div ng-controller='MainController as MC'>
+    <div>
+      <label>Type username here</label><input ng-model='name'>
+      <label>Type password here</label><input ng-model='pass'>
+      <button type='submit' ng-click='MC.userGetter(name, pass)'>Get a user</button>
+    </div>
+    <div>
+      <p>
+        <!-- {{MC.currentUser.username}} -->
+      </p>
+    </div>
+  </div>
+</body>
+</html>
