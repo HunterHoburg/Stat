@@ -1,11 +1,12 @@
 var app = angular.module("stat");
 
-app.controller("LoginController", ["$http", LoginController]);
+app.controller("LoginController", ["$http", "$state", "$location", "dataSenderService", "userSetter", LoginController]);
 
-function LoginController($http) {
+function LoginController($http, $state, $location, dataSenderService, userSetter) {
   var vm = this;
   vm.loginExpanded = false;
   vm.signupExpanded = false;
+  vm.currentUser = [];
   vm.expandLogin = function() {
     vm.signupExpanded = false;
     vm.loginExpanded = true;
@@ -15,8 +16,6 @@ function LoginController($http) {
     vm.signupExpanded = true;
   };
   vm.loginSubmit = function(username, password) {
-
-    vm.currentUser = {};
     $http({
       method: 'GET',
       url: 'http://localhost:3000/login',
@@ -25,8 +24,21 @@ function LoginController($http) {
         pass: password
       }
     }).then(function(data) {
-      vm.currentUser = data.data;
+      // console.log(data.data);
+      // vm.currentUser = data.data;
+      // vm.userSetter(data.data);
+      dataSenderService.setId(data.data.user_id);
+      vm.renderProfile();
     });
   };
-  vm.currentUser = {};
+
+  //TODO: Create signupSubmit function n stuff
+
+  vm.userSetter = function(user) {
+    vm.currentUser.push(user);
+  };
+  vm.renderProfile = function(user) {
+    $location.path('/main');
+  }
+
 }

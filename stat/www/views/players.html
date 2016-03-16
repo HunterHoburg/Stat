@@ -1,0 +1,35 @@
+<div ng-init='UC.setPlayers()'></div>
+<ion-side-menus enable-menu-with-back-views='true'>
+  <ion-side-menu-content>
+    <ion-header-bar><h2 ng-style='{color: UC.currentUser.color_1}'><button menu-toggle='left' class='button button-icon icon ion-navicon'></button>{{ UC.currentProject }}</h2></ion-header-bar>
+    <ion-content>
+      <ion-list ng-init='UC.setPlayers()'>
+        <ul>
+          <li ng-repeat='player in UC.players | unique:"player_name"'>
+            <h3 ng-class='{color: player.color}'>
+              {{ player.player_name }}
+            </h3>
+            <ul>
+              <li ng-repeat='stat in UC.players'>
+                <div ng-if='stat.player_name === player.player_name'>
+
+<!-- LESS LOGIC IN THE VIEW -->
+
+                  <p>
+                    {{ stat.numerator }} /
+                    {{ stat.denominator }}
+                    {{ stat.measurement }}
+                  </p>
+                </div>
+
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </ion-list>
+    </ion-content>
+  </ion-side-menu-content>
+  <ion-side-menu>
+
+  </ion-side-menu>
+</ion-side-menus>

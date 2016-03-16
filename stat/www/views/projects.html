@@ -1,0 +1,31 @@
+
+  <ion-content ng-init='UC.setUser()'>
+    <!-- <p>
+      Test
+    </p> -->
+
+  </ion-content>
+<ion-side-menus enable-menu-with-back-views='true'>
+  <ion-side-menu-content>
+        <ion-header-bar><h2 ng-style='{color: UC.currentUser.color_1}'><button menu-toggle='left' class='button button-icon icon ion-navicon'></button>My Projects</h2></ion-header-bar>
+        <ion-content>
+          <!-- <h3>
+            {{ UC.currentUser.username }}
+
+          </h3> -->
+          <ion-list>
+            <ul>
+              <li ng-repeat='project in UC.currentUser.projects' ng-click='UC.openProject(project.project_id, project.title)'>
+                <h4>{{ project.title }}</h4>
+                <h6>Number of players: {{ project.numberPlayers }}</h6>
+              </li>
+            </ul>
+          </ion-list>
+        </ion-content>
+
+
+  </ion-side-menu-content>
+  <ion-side-menu side="left">
+    <ion-header-bar><h2 ng-style='{color: UC.currentUser.color_2}'>Menu</h2></ion-header-bar>
+  </ion-side-menu>
+</ion-side-menus>

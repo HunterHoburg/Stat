@@ -2,9 +2,9 @@
 
 var app = angular.module("stat");
 
-app.controller('MenuController', ['$http', MenuController]);
+app.controller('MenuController', ['$http', 'dataSenderService', MenuController]);
 
-function MenuController ($http) {
+function MenuController ($http, dataSenderService) {
   var vm = this;
   vm.players = {
     hunter: {
@@ -34,5 +34,12 @@ function MenuController ($http) {
   vm.expandPlayer = function(id) {
     vm.playerId = id;
     console.log(vm.playerId);
-  }
+  };
+  vm.userData = {};
+  vm.getUserData = function() {
+    // console.log(dataSenderService.getProperty());
+    // console.log(vm.userData);
+    vm.userData = dataSenderService.getProperty();
+  };
+  vm.getUserData();
 }

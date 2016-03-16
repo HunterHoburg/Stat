@@ -6,11 +6,19 @@ $urlRouterProvider.otherwise('/');
 $stateProvider
     .state('splash', {
       url: '/',
-      templateUrl: 'views/main.html'
+      templateUrl: 'views/main.html',
+      cache: false
       // controller: 'LoginController as LC'
     })
-    // .state('/main', {
-    //   template: 'views/projects.html',
-    //   controller: 'MenuController as MC'
-    // });
+    .state('main', {
+      url: '/main',
+      templateUrl: 'views/projects.html',
+      cache: false
+      // controller: 'MenuController as MC'
+    })
+    .state('players', {
+      url: '/players',
+      templateUrl: 'views/players.html',
+      cache: false
+    });
 });
