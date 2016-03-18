@@ -29,22 +29,39 @@ function dataSenderService() {
 function playerSenderService() {
   var players = [];
 
-  this.setPlayer = function(playerId, userId, project, name, color, projectId, statid, numerator, denominator, measurement) {
-    var player = {};
-    player.player_id = playerId;
-    player.user_id = userId;
-    player.project_title = project;
-    player.player_name = name;
-    player.color = color;
-    player.project_id = projectId;
-    player.stat_id = statid;
-    player.numerator = numerator;
-    player.denominator = denominator;
-    player.measurement = measurement;
-    players.push(player);
+  this.setPlayer = function(player) {
+    for (var i = 0; i < player.length; i++) {
+      player[i].stats = [];
+      players.push(player[i]);
+    }
   };
 
-  this.players = function() {
-    return players;
+  this.setStats = function(stat, update, measurement) {
+    for (var b = 0; b < players.length; b++) {
+      if (stat.player_id === players[b].player_id) {
+        if (!update) {
+          players[b].stats.push(stat);
+        } else if (stat.stat_id === update.stat_id) {
+          for (var key in update) {
+            stat[key] = update[key]
+          }
+          for (var c = 0; c < players[b].stats.length; c++) {
+            if (players[b].stats[c].stat_id === stat.stat_id) {
+              for (var key2 in stat) {
+                players[b].stats[c][key2] = stat[key2];
+              }
+            }
+          }
+        }
+      }
+    }
+  };
+
+  this.playerGet = function() {
+    return (players);
+  };
+  this.statGet = function(player) {
+    var stat = players.indexOf(player).stats;
+    return stat;
   };
 }
