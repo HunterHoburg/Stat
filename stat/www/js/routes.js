@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module("stat")
-.config(function($stateProvider, $urlRouterProvider) {
+.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 $urlRouterProvider.otherwise('/');
 $stateProvider
     .state('splash', {
@@ -21,4 +21,4 @@ $stateProvider
       templateUrl: 'views/players.html',
       cache: false
     });
-});
+}]);

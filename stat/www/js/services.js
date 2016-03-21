@@ -1,7 +1,9 @@
 var app = angular.module('stat');
+// var d3 = angular.module('')
 
 app.service('dataSenderService', [dataSenderService]);
 app.service('playerSenderService', [playerSenderService]);
+app.service('graphDataService', [graphDataService]);
 
 function dataSenderService() {
   var user = {
@@ -49,6 +51,7 @@ function playerSenderService() {
             if (players[b].stats[c].stat_id === stat.stat_id) {
               for (var key2 in stat) {
                 players[b].stats[c][key2] = stat[key2];
+                // console.log(players[b].stats);
               }
             }
           }
@@ -58,10 +61,28 @@ function playerSenderService() {
   };
 
   this.playerGet = function() {
-    return (players);
+    return players;
   };
   this.statGet = function(player) {
+    console.log('players in service: ' + players);
     var stat = players.indexOf(player).stats;
     return stat;
   };
+}
+
+function graphDataService(value) {
+  // console.log(value);
+  // var data = {};
+  // data.title = value.measurement;
+  // data.markers = value.numerator;
+  // return {
+  //   data: data
+  }
+function graphService(data) {
+    var data = {};
+    console.log(data);
+}
+
+function signupService() {
+
 }

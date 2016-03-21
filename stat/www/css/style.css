@@ -7,9 +7,8 @@
 /* Classes for Splash Page */
 
 /*Test*/
-.spacer {
-  width: 200px;
-  height: 100px
+#chart svg {
+  height: 80px;
 }
 
 .login {

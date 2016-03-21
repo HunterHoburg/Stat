@@ -6,36 +6,40 @@
       <ion-list ng-init='UC.setPlayers()'>
         <ul>
           <li ng-repeat='player in UC.players | unique:"player_name"' ng-init='UC.playerLister(player)'>
-            <h3 ng-class='{color: player.color}'>
+            <h3 ng-style='{color: player.color}'>
               {{ player.player_name }}
             </h3>
             <!-- <p>
               {{ player }}
             </p> -->
             <ul>
-              <li ng-repeat='stat in player.stats' ng-init='UC.statLister(stat)'>
+              <li ng-repeat='stat in player.stats' ng-init='UC.statLister(stat); UC.statDetails(stat)' ng-controller='LineCtrl as LC' ng-click='UC.graphMaker(stat)' id='{{stat.stat_id}}'>
                 <div>
                   <p>
-                    <div ng-init='UC.statDetails(stat)'>
-                      {{ stat.numerator }} /
-                    </div>
+                    {{ stat.measurement }} :
                     <div>
-                      {{stat.denominator}}
+                      {{ stat.numerator }} /
+                      {{ stat.denominator }}
                     </div>
-
-                    {{ stat.measurement }}
                   </p>
-                  <canvas id='bar' class='chart chart-bar' chart-data='stat.numerator.toArray()' chart-labels='stat.measurement.toArray()'></canvas>
+                  <div>
+                    <bars-chart chart-data='vm.currentGraph'></bars-chart>
+                  </div>
                 </div>
               </li>
             </ul>
+            <div ng-click='UC.addStat()'>
+              <p>
+                Add a stat to track
+              </p>
+            </div>
           </li>
         </ul>
       </ion-list>
     </ion-content>
   </ion-side-menu-content>
   <ion-side-menu>
-    <ion-header-bar><h2>Menu</h2></ion-header-bar>
+    <ion-header-bar><h2>Menu<button ng-click='UC.goBack()'>Back</button></h2></ion-header-bar>
     <ion-list>
       <ion-item>Back to Projects</ion-item><ion-item>About</ion-item><ion-item>Settings</ion-item><ion-item>Log Out</ion-item>
     </ion-list>

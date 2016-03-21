@@ -1,14 +1,15 @@
 var app = angular.module("stat");
 
-app.controller("UserController", ["$http", "$state", "$location", "dataSenderService", "playerSenderService", UserController]);
+app.controller("UserController", ["$http", "$state", "$scope", "$location", "$ionicModal", "dataSenderService", "playerSenderService", UserController]);
 
-function UserController($http, $state, $location, dataSenderService, playerSenderService) {
+function UserController($http, $state, $scope, $location, $ionicModal, dataSenderService, playerSenderService) {
   var vm = this;
   vm.loginExpanded = false;
   vm.signupExpanded = false;
   vm.currentUser;
   vm.players = [];
   vm.currentProjectTitle;
+  vm.recentPages = [];
   vm.expandLogin = function() {
     vm.signupExpanded = false;
     vm.loginExpanded = true;
@@ -98,7 +99,7 @@ function UserController($http, $state, $location, dataSenderService, playerSende
         stat_id: stat.stat_id
       }
     }).then(function(data) {
-      console.log(data.data.data);
+      // console.log(data.data.data);
       var update = data.data.data;
       playerSenderService.setStats(stat, update[0]);
     });
@@ -107,8 +108,9 @@ function UserController($http, $state, $location, dataSenderService, playerSende
   vm.setPlayers = function() {
     vm.players = playerSenderService.playerGet();
   };
-  vm.setStats = function() {
-    vm.players.stats = playerSenderService.statGet();
+
+  vm.test = function() {
+    // console.log(vm.players);
   };
 
   vm.openProject = function(projectId, title) {
@@ -128,14 +130,71 @@ function UserController($http, $state, $location, dataSenderService, playerSende
     vm.renderPlayers();
   };
 
+  // Graph stuff
+  vm.graphMaker = function(value) {
+    console.log(value);
+    var chart = {
+      type: 'bulletChart',
+      transitionDuration: 500
+    };
+    var data = {
+      "title": "Revenue",
+            "subtitle": "US$, in thousands",
+            "ranges": [150,225,300],
+            "measures": [220],
+            "markers": [250]
+    };
+    // var color = data.color;
+    // // return {
+    // //   data: data,
+    // //   color: color
+    // // }
+    // var chart = d3.select("#" + value.stat_id)
+    //   .attr("data", data)
+    //   .attr("width", "50%")
+    //   .data(data.series);
+    // console.log(chart);
+    vm.currentGraph.options = chart;
+    vm.currentGraph.data = data;
+    console.log(vm.currentGraph);
+  };
+  vm.currentGraph = {};
   //TODO: Create signupSubmit function n stuff
 
+  // Adding stats
+  vm.addStat = function() {
+  console.log('adding a stat');
+  };
+
+  vm.historyAdd = function(page) {
+    vm.recentPages.push(page);
+  };
   vm.renderProfile = function() {
     $location.path('/main');
+    // vm.recentPages.push('/main');
+    vm.historyAdd('/main');
   };
   vm.renderPlayers = function() {
     $location.path('/players');
     playerSenderService.playerGet();
+    // vm.recentPages.push('/players');
+    vm.historyAdd('/players');
   };
+  vm.goBack = function() {
+    console.log(vm.recentPages);
+    $location.path(vm.recentPages.pop());
+  };
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
