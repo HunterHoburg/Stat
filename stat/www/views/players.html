@@ -3,32 +3,27 @@
   <ion-side-menu-content>
     <ion-header-bar><h2 ng-style='{color: UC.currentUser.color_1}'><button menu-toggle='left' class='button button-icon icon ion-navicon'></button>{{ UC.currentProject }}</h2></ion-header-bar>
     <ion-content>
-      <ion-list ng-init='UC.setPlayers()'>
+      <ion-list>
         <ul>
-          <li ng-repeat='player in UC.players | unique:"player_name"' ng-init='UC.playerLister(player)'>
+          <li ng-repeat='player in UC.players | unique:"player_name"'>
             <h3 ng-style='{color: player.color}'>
               {{ player.player_name }}
             </h3>
-            <!-- <p>
-              {{ player }}
-            </p> -->
             <ul>
-              <li ng-repeat='stat in player.stats' ng-init='UC.statLister(stat); UC.statDetails(stat)' ng-controller='LineCtrl as LC' ng-click='UC.graphMaker(stat)' id='{{stat.stat_id}}'>
+              <li ng-repeat='stat in player.stats'   id='{{stat.stat_id}}'>
                 <div>
-                  <p>
+                  <p ng-if='stat.denominator <= 1'>
                     {{ stat.measurement }} :
-                    <div>
                       {{ stat.numerator }} /
                       {{ stat.denominator }}
-                    </div>
                   </p>
                   <div>
-                    <bars-chart chart-data='vm.currentGraph'></bars-chart>
+                    <bar-chart chart-num='{{stat.numerator}}'chart-denom='{{stat.denominator}}' chart-measure='{{stat.measurement}}'></bar-chart>
                   </div>
                 </div>
               </li>
             </ul>
-            <div ng-click='UC.addStat()'>
+            <div ng-click='UC.addStat({{stat}})'>
               <p>
                 Add a stat to track
               </p>

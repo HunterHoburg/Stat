@@ -40,6 +40,7 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
       });
       dataSenderService.setId(user.user_id, user.email, user.username, user.color_1, user.color_2, projects);
       vm.renderProfile();
+      // vm.playerLister();
     });
   };
 
@@ -47,14 +48,13 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
   //FUNCTIONS FOR GETTING NORMALIZED DATA
   vm.setUser = function() {
     vm.currentUser = dataSenderService.user();
-    // console.log(vm.currentUser);
+
 
   };
   vm.setPlayers = function() {
     // console.log(vm.players);
     vm.players = playerSenderService.playerGet();
   };
-
 
   //Getting players' detailed info
   vm.playerLister = function(player) {
@@ -66,17 +66,14 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
       }
     }).then(function(data) {
       var stats = data.data.data;
-      // console.log('got stats: ' + stats);
-      // player.stats = stats;
       for (var i = 0; i < stats.length; i++) {
-        playerSenderService.setStats(stats[i], undefined);
+        vm.statLister(stats[i]);
       }
     });
   };
 
   // Getting measurements, color, etc.
   vm.statLister = function(stat) {
-    // console.log(stat);
     $http({
       method: 'GET',
       url: 'http://localhost:3000/stats',
@@ -85,23 +82,9 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
       }
     }).then(function(data) {
       var statUpdate = data.data.data;
-      // console.log(statUpdate);
-      playerSenderService.setStats(stat, statUpdate[0]);
-    });
-  };
-
-  // Getting numerator and denominator
-  vm.statDetails = function(stat) {
-    $http({
-      method: 'GET',
-      url: 'http://localhost:3000/measurements',
-      headers: {
-        stat_id: stat.stat_id
-      }
-    }).then(function(data) {
-      // console.log(data.data.data);
-      var update = data.data.data;
-      playerSenderService.setStats(stat, update[0]);
+      console.log(statUpdate);
+      playerSenderService.setStats(stat);
+      vm.setPlayers();
     });
   };
 
@@ -109,14 +92,8 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
     vm.players = playerSenderService.playerGet();
   };
 
-  vm.test = function() {
-    // console.log(vm.players);
-  };
-
   vm.openProject = function(projectId, title) {
     vm.currentProjectTitle = title;
-    //Setting this variable so it can be accessed in the promise no problemo
-
       $http({
       method: 'GET',
       url: 'http://localhost:3000/projects',
@@ -124,77 +101,73 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
         project_id: projectId
       }
     }).then(function(data) {
-      playerSenderService.setPlayer(data.data.players);
-    });
 
+      for (var h = 0; h < data.data.players.length; h++) {
+        playerSenderService.setPlayer(data.data.players[h]);
+        vm.playerLister(data.data.players[h]);
+      }
+    });
     vm.renderPlayers();
   };
 
-  // Graph stuff
-  vm.graphMaker = function(value) {
-    console.log(value);
-    var chart = {
-      type: 'bulletChart',
-      transitionDuration: 500
-    };
-    var data = {
-      "title": "Revenue",
-            "subtitle": "US$, in thousands",
-            "ranges": [150,225,300],
-            "measures": [220],
-            "markers": [250]
-    };
-    // var color = data.color;
-    // // return {
-    // //   data: data,
-    // //   color: color
-    // // }
-    // var chart = d3.select("#" + value.stat_id)
-    //   .attr("data", data)
-    //   .attr("width", "50%")
-    //   .data(data.series);
-    // console.log(chart);
-    vm.currentGraph.options = chart;
-    vm.currentGraph.data = data;
-    console.log(vm.currentGraph);
-  };
   vm.currentGraph = {};
   //TODO: Create signupSubmit function n stuff
 
-  // Adding stats
-  vm.addStat = function() {
-  console.log('adding a stat');
-  };
 
-  vm.historyAdd = function(page) {
-    vm.recentPages.push(page);
-  };
+  // vm.historyAdd = function(page) {
+  //   vm.recentPages.push(page);
+  // };
   vm.renderProfile = function() {
     $location.path('/main');
     // vm.recentPages.push('/main');
-    vm.historyAdd('/main');
+    // vm.historyAdd('/main');
   };
   vm.renderPlayers = function() {
     $location.path('/players');
     playerSenderService.playerGet();
     // vm.recentPages.push('/players');
-    vm.historyAdd('/players');
+    // vm.historyAdd('/players');
   };
-  vm.goBack = function() {
-    console.log(vm.recentPages);
-    $location.path(vm.recentPages.pop());
+  // vm.goBack = function() {
+  //   console.log(vm.recentPages);
+  //   $location.path(vm.recentPages.pop());
+  // };
+
+
+  // Adding stats
+  vm.addStat = function(stat) {
+    console.log(stat);
+    $ionicModal.fromTemplateUrl('../views/add-stat.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      vm.modal = modal;
+      vm.openModal();
+    });
   };
+  vm.openModal = function() {
+    vm.modal.show();
+  };
+  vm.closeModal = function() {
+    vm.modal.hide();
+  };
+  // $scope.$on('$destroy', function() {
+  //   $scope.modal.remove();
+  // });
+  // $scope.$on('modal.hidden', function() {
+  //
+  // });
+  // $scope.$on('modal.removed', function() {
+  //
+  // });
+  vm.addCounter = false;
+  vm.counterToggle = function() {
+    vm.addCounter = !vm.addCounter;
+  }
 
-
-
-
-
-
-
-
-
-
-
-
+  vm.changeStat = function() {
+    // console.log(stat.measurement);
+    console.log('test');
+  };
 
 }

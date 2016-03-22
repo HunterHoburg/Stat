@@ -1,6 +1,6 @@
 var app = angular.module('stat');
 
-app.controller("LineCtrl", ['$scope', '$timeout', 'graphDataService', function ($scope, $timeout, graphDataService) {
+app.controller("LineCtrl", ['$scope', '$timeout', function ($scope, $timeout, graphDataService) {
   var vm = this;
   // vm.data = graphDataService();
   vm.getData = function(stat) {

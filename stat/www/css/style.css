@@ -53,3 +53,74 @@
   margin-left: 30%;
   text-align: center;
 }
+
+
+
+
+
+
+
+
+/*TEST D3 STUFF*/
+
+.chart {
+    background: #eee;
+    padding: 3px;
+}
+
+.chart div {
+  width: 0;
+  transition: all 1s ease-out;
+  -moz-transition: all 1s ease-out;
+  -webkit-transition: all 1s ease-out;
+}
+
+.chart div {
+  font: 10px sans-serif;
+  background-color: steelblue;
+  text-align: right;
+  padding: 3px;
+  margin: 5px;
+  color: white;
+  box-shadow: 2px 2px 2px #666;
+}*/
+
+/*
+.chart rect {
+  fill: steelblue;
+}
+
+
+/*.chart {
+  background-color: #19fe29;
+}
+
+.chart .legend {
+  fill: black;
+  font: 14px sans-serif;
+  /*text-anchor: start;*/
+  font-size: 12px;
+}
+
+.chart text {
+  fill: white;
+  font: 10px sans-serif;
+  /*text-anchor: end;*/
+}
+
+.chart .label {
+  fill: black;
+  font: 14px sans-serif;
+  /*text-anchor: end;*/
+}
+
+.bar:hover {
+  fill: brown;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}*/

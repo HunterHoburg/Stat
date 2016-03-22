@@ -3,7 +3,6 @@ var app = angular.module('stat');
 
 app.service('dataSenderService', [dataSenderService]);
 app.service('playerSenderService', [playerSenderService]);
-app.service('graphDataService', [graphDataService]);
 
 function dataSenderService() {
   var user = {
@@ -32,30 +31,14 @@ function playerSenderService() {
   var players = [];
 
   this.setPlayer = function(player) {
-    for (var i = 0; i < player.length; i++) {
-      player[i].stats = [];
-      players.push(player[i]);
-    }
+      player.stats = [];
+      players.push(player);
   };
 
-  this.setStats = function(stat, update, measurement) {
+  this.setStats = function(stat) {
     for (var b = 0; b < players.length; b++) {
       if (stat.player_id === players[b].player_id) {
-        if (!update) {
           players[b].stats.push(stat);
-        } else if (stat.stat_id === update.stat_id) {
-          for (var key in update) {
-            stat[key] = update[key]
-          }
-          for (var c = 0; c < players[b].stats.length; c++) {
-            if (players[b].stats[c].stat_id === stat.stat_id) {
-              for (var key2 in stat) {
-                players[b].stats[c][key2] = stat[key2];
-                // console.log(players[b].stats);
-              }
-            }
-          }
-        }
       }
     }
   };
@@ -70,14 +53,6 @@ function playerSenderService() {
   };
 }
 
-function graphDataService(value) {
-  // console.log(value);
-  // var data = {};
-  // data.title = value.measurement;
-  // data.markers = value.numerator;
-  // return {
-  //   data: data
-  }
 function graphService(data) {
     var data = {};
     console.log(data);
