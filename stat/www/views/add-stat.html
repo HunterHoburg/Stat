@@ -16,12 +16,16 @@
       </div></label>
     </div>
     <div class='list' ng-show='!UC.addCounter'>
-      <label class='item item-input item-stacked-label'><span class='input-label'>Stat Name</span><input type='text' placeholder='Stat'></label>
-      <label class='item item-input item-stacked-label'><span class='input-label'>Numerator</span><input type='text' placeholder='Start'></label>
-      <label class='item item-input item-stacked-label'><span class='input-label'>Denominator</span><input type='text' placeholder='Start'></label>
-      <input class="jscolor {closable:true,closeText:'Close me!'}"
-      value="ff3300">
-      <label class='item item-input item-stacked-label'><span class='input-label'>Position</span><input type='text' placeholder='Stat'></label>
+      <label class='item item-input item-stacked-label'><span class='input-label'>Stat Name</span><input type='text' placeholder='Stat' ng-model='name'></label>
+      <label class='item item-input item-stacked-label'><span class='input-label'>Numerator</span><input type='text' placeholder='Start' ng-model='numerator'></label>
+      <label class='item item-input item-stacked-label'><span class='input-label'>Denominator</span><input type='text' placeholder='Start' ng-model='denominator'></label>
+
+      <label class='item item-input'><button class="button" color-picker="" ng-model="UC.color" modal-title="Choose a color" model-mode='hex'  modal-class="vcc" header-footer-class="bar-positive">
+        {{ color || "Choose a color" }}
+      </button></label>
+
+      <label class='item item-input item-stacked-label'><span class='input-label'>Position</span><input type='text' placeholder='Stat' ng-model='position'></label>
+      <label class='item item-stacked-label'><button class='button' ng-click='UC.submitStat(name, numerator, denominator, UC.color, position, UC.player_id)'>Add stat to this player</button></label>
     </div>
   </ion-content>
 </ion-view>

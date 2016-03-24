@@ -135,13 +135,13 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
 
 
   // Adding stats
-  vm.addStat = function(stat) {
-    console.log(stat);
+  vm.addStat = function() {
     $ionicModal.fromTemplateUrl('../views/add-stat.html', {
       scope: $scope,
-      animation: 'slide-in-up'
+      animation: 'slide-in-up',
     }).then(function(modal) {
       vm.modal = modal;
+      // modal.player = player;
       vm.openModal();
     });
   };
@@ -163,7 +163,29 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
   vm.addCounter = false;
   vm.counterToggle = function() {
     vm.addCounter = !vm.addCounter;
-  }
+  };
+
+
+  vm.submitStat = function(name, numerator, denominator, color, position, player_id) {
+    console.log(name, numerator, denominator, color, position, player_id);
+    $http({
+      method: 'PUT',
+      url: 'http://localhost:3000/add',
+      data: {
+        name: name,
+        numerator: numerator,
+        denominator: denominator,
+        color: color,
+        position: position,
+        type: 'stat',
+        player_id: player_id
+      }
+    }).then(function(data) {
+      console.log(data);
+    });
+    vm.color = '';
+    vm.player_id = '';
+  };
 
   vm.changeStat = function() {
     // console.log(stat.measurement);
