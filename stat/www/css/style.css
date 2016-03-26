@@ -15,6 +15,16 @@
   width: 100%;
   opacity: 0;
 }
+.increment {
+  display: inline-block;
+}
+.stat {
+  display: inline-block;
+}
+.horizontal-spacer {
+  width: 20%;
+  display: inline-block;
+}
 
 .login {
   text-align: center;
@@ -69,7 +79,7 @@
 /*TEST D3 STUFF*/
 
 .chart {
-    background: #eee;
+    background: #ffffff;
     padding: 3px;
 }
 
@@ -83,7 +93,7 @@
 .chart div {
   font: 10px sans-serif;
   background-color: steelblue;
-  text-align: right;
+  text-align: center;
   padding: 3px;
   margin: 5px;
   color: white;

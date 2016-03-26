@@ -189,11 +189,27 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
     vm.addCounter = !vm.addCounter;
   };
 
+  //Adding projects
+  vm.addProject = function() {
+    $ionicModal.fromTemplateUrl('../views/add-project.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      vm.modal = modal;
+      vm.openModal();
+    });
+  };
+  vm.openModal = function() {
+    vm.modal.show();
+  };
+  vm.closeModal = function() {
+    vm.modal.hide();
+  };
+
+
 
   vm.submitStat = function(name, numerator, denominator, color, position, player_id) {
     console.log(name, numerator, denominator, color, position, player_id);
-
-    //TODO: either make an http request for adding stats, or allow users to 'save' stats
     $http({
       method: 'PUT',
       url: 'http://localhost:3000/add',
@@ -210,7 +226,7 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
       console.log(data);
       var stat = {
         measurement: name,
-        numerator: numerator,
+        numerator: parseInt(numerator),
         denominator: denominator,
         color: color,
         position: position,
@@ -260,11 +276,15 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
     vm.closeModal();
   };
 
-  vm.changeStat = function() {
-    // console.log(stat.measurement);
-    console.log('test');
+  vm.submitProject = function(name, color, user_id) {
+    var project = {
+      title: name
+    };
+    console.log(vm.currentUser);
+    vm.addPlayer();
   };
-  vm.up = function(stat) {
+
+  vm.statUp = function(stat) {
     var id = stat.stat_id;
     for (var i = 0; i < vm.players.length; i++) {
       for (var h = 0; h < vm.players[i].stats.length; h++) {
@@ -274,7 +294,7 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
       }
     }
   };
-  vm.down = function(stat) {
+  vm.statDown = function(stat) {
     var id = stat.stat_id;
     for (var i = 0; i < vm.players.length; i++) {
       for (var h = 0; h < vm.players[i].stats.length; h++) {
@@ -283,5 +303,37 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
         }
       }
     }
+  };
+  vm.denomUp = function(stat) {
+    var id = stat.stat_id;
+    for (var i = 0; i < vm.players.length; i++) {
+      for (var h = 0; h < vm.players[i].stats.length; h++) {
+        if (vm.players[i].stats[h].stat_id === id) {
+          vm.players[i].stats[h].denominator += 1;
+        }
+      }
+    }
+  };
+  vm.denomDown = function(stat) {
+    var id = stat.stat_id;
+    for (var i = 0; i < vm.players.length; i++) {
+      for (var h = 0; h < vm.players[i].stats.length; h++) {
+        if (vm.players[i].stats[h].stat_id === id) {
+          vm.players[i].stats[h].denominator -= 1;
+        }
+      }
+    }
+  };
+
+  vm.save = function() {
+    $http({
+      method: 'PUT',
+      url: 'http://localhost:3000/save',
+      data: {
+        project_id: vm.currentProjectId,
+        user: vm.currentUser,
+        players: vm.players
+      }
+    });
   };
 }

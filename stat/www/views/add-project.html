@@ -1,0 +1,16 @@
+<ion-view title='Something'>
+  <ion-header-bar><h2>&nbsp; Add Project</h2></ion-header-bar>
+  <ion-content>
+    <div class='list'>
+      <label class='item item-input item-stacked-label'><span class='input-label'>Project Name</span><input type='text' placeholder='Stat' ng-model='name'></label>
+
+      <!-- <label class='item item-input'><button class="button" color-picker="" ng-model="UC.color" modal-title="Choose a color" model-mode='hex'  modal-class="vcc" color-box='{{UC.color}}' header-footer-class="bar-positive">
+        {{ color || "Choose a color" }}
+      </button><div class='card' style='background-color: UC.color'>
+      </div></label> -->
+
+      <label class='item item-stacked-label'><button class='button button-balanced button-medium' ng-click='UC.submitProject(name, UC.color, UC.currentUser.user_id)'>Add {{name}}</button></label>
+      <label class='item item-stacked-label'><button class='button button-assertive' ng-click='UC.closeModal()'>Cancel</button></label>
+    </div>
+  </ion-content>
+</ion-view>

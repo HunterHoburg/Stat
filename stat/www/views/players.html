@@ -1,35 +1,56 @@
 <div></div>
 <ion-side-menus enable-menu-with-back-views='true'>
   <ion-side-menu-content>
-    <ion-header-bar><h2 ng-style='{color: UC.currentUser.color_1}'><button menu-toggle='left' class='button button-icon icon ion-navicon'></button>{{ UC.currentProject }}</h2></ion-header-bar>
+    <ion-header-bar><h2 ng-style='{color: UC.currentUser.color_1}'><button menu-toggle='left' class='button button-icon icon ion-navicon'></button>{{ UC.currentProjectTitle }}</h2></ion-header-bar>
     <ion-content>
       <ion-list>
         <ul>
-          <li ng-repeat='player in UC.players | unique:"player_name"'>
+          <li ng-repeat='player in UC.players | unique:"player_name"' style='border: 1px solid {{player.color}}; margin-top: 1rem; border-radius: 5px;'>
             <h3 ng-style='{color: player.color}'>
               {{ player.player_name }}
             </h3>
             <ul>
-              <li ng-repeat='stat in player.stats'   id='{{stat.stat_id}}'>
-                <div>
-                  <div ng-if='stat.denominator <= 1'>
-                    <button ng-click='UC.up(stat)'>Up</button>
-                    <p>
-                      {{ stat.measurement }} :
-                        {{ stat.numerator }} /
+              <li ng-repeat='stat in player.stats'   id='{{stat.stat_id}}' class=''>
+                  <div class='card' ng-if='stat.denominator <= 1'>
+                      <div class='item item-divider' style='color: {{stat.color}};'>
+                      {{ stat.measurement }}
+                      </div>
+                      <div class='item item-text-wrap'>
+                        <button ng-click='UC.statUp(stat)'><i class='icon ion-plus increment'></i></button>
+                        {{ stat.numerator }}
+                        <button ng-click='UC.statDown(stat)'><i class='icon ion-minus increment'></i></button>
+                      </div>
+                  </div>
+                  <!-- <div ng-if='stat.denominator > 1'>
+                    <bar-chart  chart-num='{{stat.numerator}}'chart-denom='{{stat.denominator}}' chart-measure='{{stat.measurement}}'></bar-chart>
+                  </div> -->
+                  <div class='card' ng-if='stat.denominator > 1'>
+                      <div class='item item-divider' style='color: {{stat.color}};'>
+                      {{ stat.measurement }}
+                      </div>
+                      <div class='item item-text-wrap'>
+                        <button ng-click='UC.statUp(stat)'><i class='icon ion-plus increment'></i></button>
+                        {{ stat.numerator }}
+                        <button ng-click='UC.statDown(stat)'><i class='icon ion-minus increment'></i></button>
+                        <div class='horizontal-spacer'>
+
+                        </div>
+                        <button ng-click='UC.denomUp(stat)'><i class='icon ion-plus increment'></i></button>
                         {{ stat.denominator }}
-                    </p>
-                    <button ng-click='UC.down(stat)'>Down</button>
+                        <button ng-click='UC.denomDown(stat)'><i class='icon ion-minus increment'></i></button>
+                      </div>
+                      <!-- <div class='item item-text-wrap'>
+                        <button ng-click='UC.denomUp(stat)'><i class='icon ion-plus increment'></i></button>
+                        {{ stat.denominator }}
+                        <button ng-click='UC.denomDown(stat)'><i class='icon ion-minus increment'></i></button>
+                      </div> -->
                   </div>
-                  <div>
-                    <bar-chart chart-num='{{stat.numerator}}'chart-denom='{{stat.denominator}}' chart-measure='{{stat.measurement}}'></bar-chart>
-                  </div>
-                </div>
+
               </li>
             </ul>
             <div ng-click='UC.addStat(); UC.player_id = player.player_id'>
               <p>
-                Add a stat to track
+                Add a stat to {{player.player_name}}
               </p>
             </div>
           </li>
@@ -40,6 +61,9 @@
       </ion-list>
       <div>
         <button class='button button-calm' ng-click='UC.addPlayer()'>Add Player</button>
+      </div>
+      <div>
+        <button class='button button-energized' ng-click='UC.save()'>Save Stats</button>
       </div>
     </ion-content>
   </ion-side-menu-content>
