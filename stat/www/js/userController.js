@@ -28,10 +28,10 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
         user_id: user_id
       }
     }).then(function(data) {
-      console.log(data);
+      // console.log(data);
       var projects = data.data;
       var p = {};
-      console.log(projects);
+      // console.log(projects);
       projects.forEach(function(element) {
         element.numberPlayers = 1;
       });
@@ -77,7 +77,7 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
   //FUNCTIONS FOR GETTING NORMALIZED DATA
   vm.setUser = function() {
     vm.currentUser = dataSenderService.user();
-    console.log(vm.currentUser);
+    // console.log(vm.currentUser);
   };
   vm.setPlayers = function() {
     // console.log(vm.players);
@@ -208,20 +208,21 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
       }
     }).then(function(data) {
       console.log(data);
-    });
-    var stat = {
-      measurement: name,
-      numerator: numerator,
-      denominator: denominator,
-      color: color,
-      position: position
-    };
-    for (var u = 0; u < vm.players.length; u++) {
-      if (player_id === vm.players[u].player_id) {
-        vm.players[u].stats.push(stat);
-        console.log(vm.players[u]);
+      var stat = {
+        measurement: name,
+        numerator: numerator,
+        denominator: denominator,
+        color: color,
+        position: position,
+        stat_id: data.data[0]
+      };
+      for (var u = 0; u < vm.players.length; u++) {
+        if (player_id === vm.players[u].player_id) {
+          vm.players[u].stats.push(stat);
+          console.log(vm.players[u]);
+        }
       }
-    }
+    });
     vm.color = '';
     vm.player_id = '';
     vm.closeModal();
@@ -241,17 +242,19 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
       }
     }).then(function(data) {
       console.log(data);
+      var player = {
+        player_name: player_name,
+        color: color,
+        user_id: vm.currentUser.user_id,
+        stats: [],
+        project_id: vm.currentProjectId,
+        title: vm.currentProjectTitle,
+        global_stat_id: '',
+        player_id: data.data[0]
+      };
+      vm.players.push(player);
+      console.log(vm.players);
     });
-    var player = {
-      player_name: player_name,
-      color: color,
-      user_id: vm.currentUser.user_id,
-      stats: [],
-      project_id: vm.currentProjectId,
-      title: vm.currentProjectTitle,
-      global_stat_id: ''
-    };
-    vm.players.push(player);
     console.log(vm.players);
     vm.color = '';
     vm.closeModal();
@@ -261,5 +264,24 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
     // console.log(stat.measurement);
     console.log('test');
   };
-
+  vm.up = function(stat) {
+    var id = stat.stat_id;
+    for (var i = 0; i < vm.players.length; i++) {
+      for (var h = 0; h < vm.players[i].stats.length; h++) {
+        if (vm.players[i].stats[h].stat_id === id) {
+          vm.players[i].stats[h].numerator += 1;
+        }
+      }
+    }
+  };
+  vm.down = function(stat) {
+    var id = stat.stat_id;
+    for (var i = 0; i < vm.players.length; i++) {
+      for (var h = 0; h < vm.players[i].stats.length; h++) {
+        if (vm.players[i].stats[h].stat_id === id) {
+          vm.players[i].stats[h].numerator -= 1;
+        }
+      }
+    }
+  };
 }

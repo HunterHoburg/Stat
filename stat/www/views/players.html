@@ -12,11 +12,15 @@
             <ul>
               <li ng-repeat='stat in player.stats'   id='{{stat.stat_id}}'>
                 <div>
-                  <p ng-if='stat.denominator <= 1'>
-                    {{ stat.measurement }} :
-                      {{ stat.numerator }} /
-                      {{ stat.denominator }}
-                  </p>
+                  <div ng-if='stat.denominator <= 1'>
+                    <button ng-click='UC.up(stat)'>Up</button>
+                    <p>
+                      {{ stat.measurement }} :
+                        {{ stat.numerator }} /
+                        {{ stat.denominator }}
+                    </p>
+                    <button ng-click='UC.down(stat)'>Down</button>
+                  </div>
                   <div>
                     <bar-chart chart-num='{{stat.numerator}}'chart-denom='{{stat.denominator}}' chart-measure='{{stat.measurement}}'></bar-chart>
                   </div>
