@@ -10,6 +10,11 @@
 #chart svg {
   height: 80px;
 }
+.spacer {
+  height: 1rem;
+  width: 100%;
+  opacity: 0;
+}
 
 .login {
   text-align: center;

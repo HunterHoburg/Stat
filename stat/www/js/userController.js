@@ -9,6 +9,7 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
   vm.currentUser;
   vm.players = [];
   vm.currentProjectTitle;
+  vm.currentProjectId;
   vm.recentPages = [];
   vm.expandLogin = function() {
     vm.signupExpanded = false;
@@ -18,6 +19,41 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
     vm.loginExpanded = false;
     vm.signupExpanded = true;
   };
+
+  vm.userData = function(user_id) {
+    $http({
+      method: 'GET',
+      url: 'http://localhost:3000/userdata',
+      headers: {
+        user_id: user_id
+      }
+    }).then(function(data) {
+      console.log(data);
+      var projects = data.data;
+      var p = {};
+      console.log(projects);
+      projects.forEach(function(element) {
+        element.numberPlayers = 1;
+      });
+
+      for (var i = 0; i < projects.length; i++) {
+        var id = projects[i].project_id;
+        // console.log('id: ' + id);
+        if (p[id]) {
+          p[id].numberPlayers += projects[i].numberPlayers;
+        } else {
+          p[id] = {};
+          p[id].numberPlayers = projects[i].numberPlayers;
+          p[id].title = projects[i].title;
+          p[id].project_id = projects[i].project_id;
+        }
+      }
+      // console.log(p);
+      // return p;
+      dataSenderService.setProjects(p);
+    });
+  };
+
   vm.loginSubmit = function(username, password) {
     $http({
       method: 'GET',
@@ -27,20 +63,13 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
         pass: password
       }
     }).then(function(data) {
-      var user = data.data.data;
-      var projects = data.data.projects;
-      projects.forEach(function(element) {
-        element.numberPlayers = 1;
-      });
-      projects.reduce(function(a, b) {
-        if (a.title === b.title) {
-          b.numberPlayers = a.numberPlayers + 1;
-          projects.splice(projects.indexOf(a), 1);
-        }
-      });
-      dataSenderService.setId(user.user_id, user.email, user.username, user.color_1, user.color_2, projects);
+      // console.log(data);
+      var user = data.data[0];
+      // console.log(user);
+      // console.log(projects);
+      dataSenderService.setId(user.user_id, user.email, user.username, user.color_1, user.color_2);
+      vm.userData(user.user_id);
       vm.renderProfile();
-      // vm.playerLister();
     });
   };
 
@@ -48,8 +77,7 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
   //FUNCTIONS FOR GETTING NORMALIZED DATA
   vm.setUser = function() {
     vm.currentUser = dataSenderService.user();
-
-
+    console.log(vm.currentUser);
   };
   vm.setPlayers = function() {
     // console.log(vm.players);
@@ -88,12 +116,10 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
     });
   };
 
-  vm.setPlayers = function() {
-    vm.players = playerSenderService.playerGet();
-  };
-
   vm.openProject = function(projectId, title) {
+    console.log(projectId, title);
     vm.currentProjectTitle = title;
+    vm.currentProjectId = projectId;
       $http({
       method: 'GET',
       url: 'http://localhost:3000/projects',
@@ -111,37 +137,35 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
   };
 
   vm.currentGraph = {};
+
   //TODO: Create signupSubmit function n stuff
 
-
-  // vm.historyAdd = function(page) {
-  //   vm.recentPages.push(page);
-  // };
   vm.renderProfile = function() {
     $location.path('/main');
-    // vm.recentPages.push('/main');
-    // vm.historyAdd('/main');
   };
   vm.renderPlayers = function() {
     $location.path('/players');
-    playerSenderService.playerGet();
-    // vm.recentPages.push('/players');
-    // vm.historyAdd('/players');
+    // playerSenderService.playerGet();
   };
-  // vm.goBack = function() {
-  //   console.log(vm.recentPages);
-  //   $location.path(vm.recentPages.pop());
-  // };
 
+  // Adding players
+  vm.addPlayer = function() {
+    $ionicModal.fromTemplateUrl('../views/add-player.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      vm.modal = modal;
+      vm.openModal();
+    });
+  };
 
   // Adding stats
   vm.addStat = function() {
     $ionicModal.fromTemplateUrl('../views/add-stat.html', {
       scope: $scope,
-      animation: 'slide-in-up',
+      animation: 'slide-in-up'
     }).then(function(modal) {
       vm.modal = modal;
-      // modal.player = player;
       vm.openModal();
     });
   };
@@ -168,6 +192,8 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
 
   vm.submitStat = function(name, numerator, denominator, color, position, player_id) {
     console.log(name, numerator, denominator, color, position, player_id);
+
+    //TODO: either make an http request for adding stats, or allow users to 'save' stats
     $http({
       method: 'PUT',
       url: 'http://localhost:3000/add',
@@ -183,8 +209,52 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
     }).then(function(data) {
       console.log(data);
     });
+    var stat = {
+      measurement: name,
+      numerator: numerator,
+      denominator: denominator,
+      color: color,
+      position: position
+    };
+    for (var u = 0; u < vm.players.length; u++) {
+      if (player_id === vm.players[u].player_id) {
+        vm.players[u].stats.push(stat);
+        console.log(vm.players[u]);
+      }
+    }
     vm.color = '';
     vm.player_id = '';
+    vm.closeModal();
+  };
+
+  vm.submitPlayer = function(player_name, color) {
+    $http({
+      method: 'PUT',
+      url: 'http://localhost:3000/add',
+      data: {
+        player_name: player_name,
+        color: color,
+        type: 'player',
+        user_id: vm.currentUser.user_id,
+        title: vm.currentProjectTitle,
+        project_id: vm.currentProjectId
+      }
+    }).then(function(data) {
+      console.log(data);
+    });
+    var player = {
+      player_name: player_name,
+      color: color,
+      user_id: vm.currentUser.user_id,
+      stats: [],
+      project_id: vm.currentProjectId,
+      title: vm.currentProjectTitle,
+      global_stat_id: ''
+    };
+    vm.players.push(player);
+    console.log(vm.players);
+    vm.color = '';
+    vm.closeModal();
   };
 
   vm.changeStat = function() {

@@ -5,8 +5,12 @@
   </ion-content>
 </ion-modal-view> -->
 
+<!-- <a class="button icon-left ion-chevron-left button-clear button-dark">Back</a> -->
+
+
+
 <ion-view title='Something'>
-  <ion-header-bar class='bar bar-stable'><h2><a class="button icon-left ion-chevron-left button-clear button-dark">Back</a>&nbsp; Add Stat</h2></ion-header-bar>
+  <ion-header-bar><h2>&nbsp; Add Stat</h2></ion-header-bar>
   <ion-content>
     <div class='list'>
       Counter
@@ -20,12 +24,14 @@
       <label class='item item-input item-stacked-label'><span class='input-label'>Numerator</span><input type='text' placeholder='Start' ng-model='numerator'></label>
       <label class='item item-input item-stacked-label'><span class='input-label'>Denominator</span><input type='text' placeholder='Start' ng-model='denominator'></label>
 
-      <label class='item item-input'><button class="button" color-picker="" ng-model="UC.color" modal-title="Choose a color" model-mode='hex'  modal-class="vcc" header-footer-class="bar-positive">
+      <label class='item item-input'><button class="button" color-picker="" ng-model="UC.color" modal-title="Choose a color" model-mode='hex'  modal-class="vcc" color-box='{{UC.color}}' header-footer-class="bar-positive">
         {{ color || "Choose a color" }}
-      </button></label>
+      </button><div class='card' style='background-color: UC.color'>
+      </div></label>
 
       <label class='item item-input item-stacked-label'><span class='input-label'>Position</span><input type='text' placeholder='Stat' ng-model='position'></label>
-      <label class='item item-stacked-label'><button class='button' ng-click='UC.submitStat(name, numerator, denominator, UC.color, position, UC.player_id)'>Add stat to this player</button></label>
+      <label class='item item-stacked-label'><button class='button button-balanced button-medium' ng-click='UC.submitStat(name, numerator, denominator, UC.color, position, UC.player_id)'>Add stat to this player</button></label>
+      <label class='item item-stacked-label'><button class='button button-assertive' ng-click='UC.closeModal()'>Cancel</button></label>
     </div>
   </ion-content>
 </ion-view>

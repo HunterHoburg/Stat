@@ -11,16 +11,19 @@ function dataSenderService() {
     username: '',
     color_1: '',
     color_2: '',
-    projects: []
+    projects: {}
   };
-  this.setId = function(id, email, username, color_1, color_2, projects) {
+  this.setId = function(id, email, username, color_1, color_2) {
     user.user_id = id;
     user.email = email;
     user.username = username;
     user.color_1 = color_1;
     user.color_2 = color_2;
-    user.projects = projects;
+    // user.projects = projects;
     // console.log(user.projects);
+  };
+  this.setProjects = function(projectsObj) {
+    user.projects = projectsObj;
   };
   this.user = function() {
     return user;
