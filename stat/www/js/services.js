@@ -34,6 +34,7 @@ function playerSenderService() {
   var players = [];
 
   this.setPlayer = function(player) {
+    console.log(player);
       player.stats = [];
       players.push(player);
   };
@@ -43,6 +44,7 @@ function playerSenderService() {
       if (stat.player_id === players[b].player_id) {
           players[b].stats.push(stat);
       }
+      console.log(this.players);
     }
   };
 

@@ -10,7 +10,7 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
   vm.players = [];
   vm.currentProjectTitle;
   vm.currentProjectId;
-  vm.recentPages = [];
+  // vm.recentPages = [];
   vm.expandLogin = function() {
     vm.signupExpanded = false;
     vm.loginExpanded = true;
@@ -54,6 +54,34 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
     });
   };
 
+  vm.signup = function() {
+    $ionicModal.fromTemplateUrl('../views/signup.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      vm.modal = modal;
+      vm.openModal();
+    });
+  };
+
+  vm.signupSubmit = function(name, email1, email2, password1, password2, color) {
+    // console.log(name, email, password, color);
+    if (email1 === email2 && password1 === password2) {
+      $http({
+        method: 'POST',
+        url: 'http://localhost:3000/signup',
+        data: {
+          username: name,
+          email: email1,
+          password: password1,
+          color_1: color
+        }
+      }).then(function(data) {
+        console.log(data);
+      });
+    }
+  };
+
   vm.loginSubmit = function(username, password) {
     $http({
       method: 'GET',
@@ -64,12 +92,16 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
       }
     }).then(function(data) {
       // console.log(data);
-      var user = data.data[0];
-      // console.log(user);
-      // console.log(projects);
-      dataSenderService.setId(user.user_id, user.email, user.username, user.color_1, user.color_2);
-      vm.userData(user.user_id);
-      vm.renderProfile();
+      if (data.data === 'invalid') {
+        console.log('error');
+      } else {
+        var user = data.data[0];
+        // console.log(user);
+        // console.log(projects);
+        dataSenderService.setId(user.user_id, user.email, user.username, user.color_1, user.color_2);
+        vm.userData(user.user_id);
+        vm.renderProfile();
+      }
     });
   };
 
@@ -86,6 +118,7 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
 
   //Getting players' detailed info
   vm.playerLister = function(player) {
+    console.log(player);
     $http({
       method: 'GET',
       url: 'http://localhost:3000/playerstats',
@@ -93,9 +126,14 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
         player_id: player.player_id
       }
     }).then(function(data) {
+      // console.log(data.data.data);
       var stats = data.data.data;
-      for (var i = 0; i < stats.length; i++) {
-        vm.statLister(stats[i]);
+      if (data.data.data[0]) {
+        for (var i = 0; i < stats.length; i++) {
+          vm.statLister(stats[i]);
+        }
+      } else {
+        vm.setPlayers();
       }
     });
   };
@@ -117,7 +155,7 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
   };
 
   vm.openProject = function(projectId, title) {
-    console.log(projectId, title);
+    // console.log(projectId, title);
     vm.currentProjectTitle = title;
     vm.currentProjectId = projectId;
       $http({
@@ -127,11 +165,13 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
         project_id: projectId
       }
     }).then(function(data) {
-
+      // console.log(data);
       for (var h = 0; h < data.data.players.length; h++) {
         playerSenderService.setPlayer(data.data.players[h]);
+        console.log(data.data.players[h]);
         vm.playerLister(data.data.players[h]);
       }
+
     });
     vm.renderPlayers();
   };
@@ -175,15 +215,6 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
   vm.closeModal = function() {
     vm.modal.hide();
   };
-  // $scope.$on('$destroy', function() {
-  //   $scope.modal.remove();
-  // });
-  // $scope.$on('modal.hidden', function() {
-  //
-  // });
-  // $scope.$on('modal.removed', function() {
-  //
-  // });
   vm.addCounter = false;
   vm.counterToggle = function() {
     vm.addCounter = !vm.addCounter;
@@ -199,12 +230,12 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
       vm.openModal();
     });
   };
-  vm.openModal = function() {
-    vm.modal.show();
-  };
-  vm.closeModal = function() {
-    vm.modal.hide();
-  };
+  // vm.openModal = function() {
+  //   vm.modal.show();
+  // };
+  // vm.closeModal = function() {
+  //   vm.modal.hide();
+  // };
 
 
 
@@ -276,12 +307,29 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
     vm.closeModal();
   };
 
-  vm.submitProject = function(name, color, user_id) {
-    var project = {
-      title: name
-    };
-    console.log(vm.currentUser);
-    vm.addPlayer();
+  vm.submitProject = function(name, user_id, player_name, color) {
+    // console.log(vm.players);
+    vm.currentProjectTitle = name;
+    $http({
+      method: 'PUT',
+      url: 'http://localhost:3000/add',
+      data: {
+        type: 'project',
+        title: name,
+        user_id: user_id,
+        player_name: player_name,
+        color: color
+      }
+    }).then(function(data) {
+      console.log(data.data.project_id);
+      vm.currentProjectId = data.data.project_id;
+      vm.openProject(data.data.project_id, name);
+      // vm.userData(vm.currentUser.user_id);
+      vm.closeModal();
+
+    });
+    // vm.addPlayer();
+    vm.color = '';
   };
 
   vm.statUp = function(stat) {
@@ -325,7 +373,14 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
     }
   };
 
+  vm.resetProject = function() {
+    vm.players = [];
+    vm.currentProjectId = '';
+    vm.currentProjectTitle = '';
+  };
+
   vm.save = function() {
+    console.log(vm.players);
     $http({
       method: 'PUT',
       url: 'http://localhost:3000/save',
