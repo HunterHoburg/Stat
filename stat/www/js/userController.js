@@ -85,7 +85,7 @@ function UserController($http, $state, $scope, $location, $ionicModal, dataSende
   vm.loginSubmit = function(username, password) {
     $http({
       method: 'GET',
-      url: 'http://localhost:3000/login',
+      url: 'https://hidden-lake-99126.herokuapp.com/login',
       headers: {
         name: username,
         pass: password
