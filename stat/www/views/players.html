@@ -1,24 +1,27 @@
 <div></div>
 <ion-side-menus enable-menu-with-back-views='true'>
-  <ion-side-menu-content>
-    <ion-header-bar><h2 ng-style='{color: UC.currentUser.color_1}'><button menu-toggle='left' class='button button-icon icon ion-navicon'></button>{{ UC.currentProjectTitle }}</h2></ion-header-bar>
+  <ion-side-menu-content class='background'>
+    <ion-header-bar class='background'><h2 ng-style='{color: UC.currentUser.color_1}' class='bitter'><button menu-toggle='left' class='button button-icon icon ion-navicon'></button>{{ UC.currentProjectTitle }}</h2></ion-header-bar>
     <ion-content>
       <ion-list>
         <ul>
-          <li ng-repeat='player in UC.players | unique:"player_name"' style='border: 1px solid {{player.color}}; margin-top: 1rem; border-radius: 5px;'>
-            <h3 ng-style='{color: player.color}'>
+          <li ng-repeat='player in UC.players | unique:"player_name"' style='border: 3px solid {{player.color}}; margin: 1rem; border-radius: 8px;'>
+            <h3 ng-style='{color: player.color}' class='bitter player-name'>
               {{ player.player_name }}
             </h3>
             <ul>
-              <li ng-repeat='stat in player.stats'   id='{{stat.stat_id}}' class=''>
+              <li ng-repeat='stat in player.stats'   id='{{stat.stat_id}}' class='bitter'>
                   <div class='card' ng-if='stat.denominator <= 1'>
-                      <div class='item item-divider' style='color: {{stat.color}};'>
+                      <div class='item item-divider stat-title lighter-background' style='color: {{stat.color}};'>
                       {{ stat.measurement }}
                       </div>
-                      <div class='item item-text-wrap'>
-                        <button ng-click='UC.statUp(stat)'><i class='icon ion-plus increment'></i></button>
-                        {{ stat.numerator }}
-                        <button ng-click='UC.statDown(stat)'><i class='icon ion-minus increment'></i></button>
+                      <div class='item item-text-wrap bitter'>
+                        <button ng-click='UC.statUp(stat)' class='button button-medium button-positive increment'><i class='icon ion-plus'></i></button>
+                        <p id='stat-number'>
+                          {{ stat.numerator }}
+                        </p>
+                        <button ng-click='UC.statDown(stat)' class='button button-medium button-energized increment'><i class='icon ion-minus'></i></button>
+                        <button ng-click='UC.delete(1, stat.stat_id, null)' class='button button-medium button-assertive increment'><i class='ion-trash-a'></i></button>
                       </div>
                   </div>
                   <!-- <div ng-if='stat.denominator > 1'>
@@ -29,29 +32,22 @@
                       {{ stat.measurement }}
                       </div>
                       <div class='item item-text-wrap'>
-                        <button ng-click='UC.statUp(stat)'><i class='icon ion-plus increment'></i></button>
+                        <button ng-click='UC.statUp(stat)' class='button button-medium button-positive increment'><i class='icon ion-plus'></i></button>
                         {{ stat.numerator }}
-                        <button ng-click='UC.statDown(stat)'><i class='icon ion-minus increment'></i></button>
-                        <div class='horizontal-spacer'>
-
-                        </div>
-                        <button ng-click='UC.denomUp(stat)'><i class='icon ion-plus increment'></i></button>
+                        <button ng-click='UC.statDown(stat)' class='button button-medium button-energized increment'><i class='icon ion-minus'></i></button>
+                        <br>
+                        <button ng-click='UC.denomUp(stat)' class='increment button button-positive button-medium'><i class='icon ion-plus'></i></button>
                         {{ stat.denominator }}
-                        <button ng-click='UC.denomDown(stat)'><i class='icon ion-minus increment'></i></button>
+                        <button ng-click='UC.denomDown(stat)' class='increment button button-energized button-medium'><i class='icon ion-minus'></i></button>
+                        <button ng-click='UC.delete(1, stat.stat_id, null)' class='button button-medium button-assertive increment'><i class='icon ion-trash-a'></i></button>
                       </div>
-                      <!-- <div class='item item-text-wrap'>
-                        <button ng-click='UC.denomUp(stat)'><i class='icon ion-plus increment'></i></button>
-                        {{ stat.denominator }}
-                        <button ng-click='UC.denomDown(stat)'><i class='icon ion-minus increment'></i></button>
-                      </div> -->
                   </div>
-
               </li>
             </ul>
-            <div ng-click='UC.addStat(); UC.player_id = player.player_id'>
-              <p>
-                Add a stat to {{player.player_name}}
-              </p>
+            <div class='button-bar'>
+              <a class='button button-balanced' ng-click='UC.addStat(player.player_id)'>Add Stat</a>
+              <!-- <a class='button button-energized button-outline center-side' ng-click='UC.editPlayer()'>Edit</a> -->
+              <a class='button button-assertive' ng-click='UC.delete(2, player.player_id, null)'>Delete Player</a>
             </div>
           </li>
           <div class='spacer'>
@@ -59,18 +55,26 @@
           </div>
         </ul>
       </ion-list>
-      <div>
-        <button class='button button-calm' ng-click='UC.addPlayer()'>Add Player</button>
-      </div>
-      <div>
-        <button class='button button-energized' ng-click='UC.save()'>Save Stats</button>
+      <div class='card lighter-background'>
+        <div>
+          <button class='button button-calm left-side' ng-click='UC.addPlayer()'>Add Player</button>
+        </div>
+        <div>
+          <button class='button button-energized right-side' ng-click='UC.save()'>Save Stats</button>
+        </div>
       </div>
     </ion-content>
   </ion-side-menu-content>
-  <ion-side-menu>
-    <ion-header-bar><h2>Menu<button ng-click='UC.goBack()'>Back</button></h2></ion-header-bar>
-    <ion-list>
-      <ion-item>Back to Projects</ion-item><ion-item>About</ion-item><ion-item>Settings</ion-item><ion-item>Log Out</ion-item>
-    </ion-list>
+  <ion-side-menu side='left'>
+    <ion-header-bar class='background'><h2 class='bitter'>Menu</h2></ion-header-bar>
+    <ion-content class='background bitter'>
+      <ion-list>
+        <!-- <ion-item>Back to Projects</ion-item> -->
+        <ion-item ng-click='UC.about("players-about")'>About This Page</ion-item>
+        <!-- <ion-item>Settings</ion-item> -->
+        <ion-item ng-click='UC.about("creator-about")'>Contact</ion-item>
+        <ion-item ng-click='UC.logOut()'>Log Out</ion-item>
+      </ion-list>
+    </ion-content>
   </ion-side-menu>
 </ion-side-menus>

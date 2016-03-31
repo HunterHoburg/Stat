@@ -9,19 +9,19 @@
 
 
 
-<ion-view title='Something'>
-  <ion-header-bar><h2>&nbsp; Add Player</h2></ion-header-bar>
-  <ion-content>
-    <div class='list'>
+<ion-modal-view title='Something'>
+  <ion-header-bar class='background'><h2>&nbsp; Add Player</h2></ion-header-bar>
+  <ion-content class='background'>
+    <div class='list lighter-background'>
       <label class='item item-input item-stacked-label'><span class='input-label'>Player Name</span><input type='text' placeholder='Name' ng-model='name'></label>
 
-      <label class='item item-input'><button class="button" color-picker="" ng-model="UC.color" modal-title="Choose a color" modal-class="vcc" color-box='{{UC.color}}' header-footer-class="bar-positive">
+      <label class='item item-input lighter-background'><button class="button" color-picker="" ng-model="UC.color" modal-title="Choose a color" modal-class="vcc" color-box='{{UC.color}}' header-footer-class="bar-positive">
         {{ UC.color || "Choose this player's color" }}
       </button></label>
 
-      <label class='item item-stacked-label'><button class='button button-balanced' ng-click='UC.submitPlayer(name, UC.color)'>Add player to project</button></label>
-      <label class='item item-stacked-label'><button class='button button-assertive' ng-click='UC.closeModal()'>Cancel</button></label>
+      <label class='item item-stacked-label'><button class='button button-balanced center' ng-click='UC.submitPlayer(name, UC.color)'>Add player to project</button></label>
+      <label class='item item-stacked-label'><button class='button button-assertive center' ng-click='UC.closeModal()'>Cancel</button></label>
 
     </div>
   </ion-content>
-</ion-view>
+</ion-modal-view>

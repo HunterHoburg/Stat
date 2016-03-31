@@ -1,0 +1,21 @@
+<ion-modal-view title='Signin'>
+  <ion-header-bar class='background'><h2>Sign In</h2></ion-header-bar>
+  <ion-content class='background'>
+
+    <div class='list'>
+      <label class='item item-input item-floating-label'><span class='input-label'>Name</span><input type='text' placeholder="User Name" ng-model='username' class='lighter-background'></label>
+
+      <label class='item item-input item-floating-label'><span class='input-label'>Password</span><input type='password' placeholder="Password" ng-model='password' class='lighter-background'></label>
+
+      <div class='item card lighter-background' ng-if='UC.errorMessage'>
+        Zoinks! Either your username or password was invalid.
+      </div>
+
+      <label class='item item-floating-label'>
+        <button class='button button-balanced button-medium center' ng-click='UC.loginSubmit(username, password)'>Sign In</button>
+        <!-- <button class='button button-assertive right-side' ng-click='UC.goBack()'>Cancel</button> -->
+      </label>
+    </div>
+    <ion-spinner icon='spiral' class='spiral' ng-if='UC.waiting'></ion-spinner>
+  </ion-content>
+</ion-modal-view>

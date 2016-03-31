@@ -1,24 +1,29 @@
-<div class='spacer'>
+<ion-content class='splash-page background'>
+  <h1 class='title'>STAT</h1>
+  <div class='list'>
+    <div class='list-item'>
+      <div class='button button-large splash-button signin-button'
+         ng-click='UC.expandLogin()'>
+         Sign In
+      </div>
+    </div>
+    <div class='list-item'>
+      <div class='button button-large splash-button signup-button' ng-click='UC.signup()'>
+         Sign Up
+      </div>
+    </div>
+    <div class='list-item'>
+      <div class='button button-large splash-button splash-about-button' ng-click='UC.splashAbout()'>
+        What is Stat?
+      </div>
+    </div>
+    <div class='list-item'>
+      <div class='splash-text item item-text-wrap' ng-show='UC.aboutVisible'>
+        Stat is a tool for tracking statistics. You can record statistics for fantasy football, LARP, family game night - Stat is set up to track whatever you might need. <br>
+        <span class='splash-about-icon8'>Icon from </span>
+        <a href='https://icons8.com/' class='splash-about-icon8'>Icons8</a>
+      </div>
+    </div>
+  </div>
 
-</div>
-<div ng-controller='UserController as UC'>
-  <div class='login'>
-    <div ng-show='UC.loginExpanded'>
-      <form class='loginBox'>
-        <input type='text' ng-model='username' placeholder='Username' class='loginField'>
-        <input type='password' ng-model='password' placeholder='Password' class='loginField'>
-        <button type='submit' ng-click='UC.loginSubmit(username, password)'>Signin</button>
-      </form>
-    </div>
-    <div class='loginButton' ng-click='UC.expandLogin()'>Signin</div>
-  </div>
-  <div class='signup'>
-    <div class='signupButton' ng-click='UC.signup()'>Signup</div>
-    <div ng-show='UC.signupExpanded'>
-      <form class='signupBox'>
-        <input type='text' ng-model='username' placeholder='Username' class='signupField'>
-        <input type='text' ng-model='password' placeholder='Password' class='signupField'>
-      </form>
-    </div>
-  </div>
-</div>
+</ion-content>

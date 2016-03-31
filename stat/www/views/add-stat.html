@@ -1,37 +1,41 @@
-<!-- <ion-modal-view>
-  <ion-header-bar><<h1>Add Habit</h1></ion-header-bar>
-  <ion-content>
-    <
-  </ion-content>
-</ion-modal-view> -->
 
-<!-- <a class="button icon-left ion-chevron-left button-clear button-dark">Back</a> -->
-
-
-
-<ion-view title='Something'>
-  <ion-header-bar><h2>&nbsp; Add Stat</h2></ion-header-bar>
-  <ion-content>
-    <div class='list'>
+<ion-modal-view title='Something'>
+  <ion-header-bar class='lighter-background'><h2>&nbsp; Add Stat</h2></ion-header-bar>
+  <ion-content class='background'>
+    <!-- <div class='list'>
       Counter
       <label class='toggle' ng-click='UC.counterToggle()'><input type='checkbox'><div class='track'>
         <div class='handle'>
         </div>
       </div></label>
-    </div>
-    <div class='list' ng-show='!UC.addCounter'>
-      <label class='item item-input item-stacked-label'><span class='input-label'>Stat Name</span><input type='text' placeholder='Stat' ng-model='name'></label>
-      <label class='item item-input item-stacked-label'><span class='input-label'>Numerator</span><input type='text' placeholder='Start' ng-model='numerator'></label>
-      <label class='item item-input item-stacked-label'><span class='input-label'>Denominator</span><input type='text' placeholder='Start' ng-model='denominator'></label>
+    </div> -->
+    <div class='list lighter-background'>
+      <label class='item item-input item-stacked-label lighter-background' ng-click='UC.counterToggle()'>
+        <span class='input-label'>Counter</span>
+        <label class='toggle toggle-balanced'>
+          <input type='checkbox' ng-click='UC.counterToggle()'>
+          <div class='track'>
+            <div class='handle'>
 
-      <label class='item item-input'><button class="button" color-picker="" ng-model="UC.color" modal-title="Choose a color" model-mode='hex'  modal-class="vcc" color-box='{{UC.color}}' header-footer-class="bar-positive">
-        {{ color || "Choose a color" }}
+            </div>
+          </div>
+        </label>
+      </label>
+      <label class='item item-input item-stacked-label lighter-background'><span class='input-label'>Stat Name</span><input type='text' placeholder='Stat' ng-model='name'></label>
+      <label class='item item-input item-stacked-label lighter-background'><span class='input-label'>Numerator</span><input type='text' placeholder='Stat' ng-model='numerator'></label>
+      <label class='item item-input item-stacked-label lighter-background' ng-show='!UC.addCounter'><span class='input-label'>Denominator</span><input type='text' placeholder='Stat' ng-model='denominator'></label>
+
+      <label class='item item-input lighter-background'><button class="button" color-picker="" ng-model="UC.color" modal-title="Choose stat color" model-mode='hex'  modal-class="vcc" color-box='{{UC.color}}' header-footer-class="bar-positive">
+        {{ color || "Choose stat color" }}
       </button><div class='card' style='background-color: UC.color'>
       </div></label>
 
-      <label class='item item-input item-stacked-label'><span class='input-label'>Position</span><input type='text' placeholder='Stat' ng-model='position'></label>
-      <label class='item item-stacked-label'><button class='button button-balanced button-medium' ng-click='UC.submitStat(name, numerator, denominator, UC.color, position, UC.player_id)'>Add stat to this player</button></label>
-      <label class='item item-stacked-label'><button class='button button-assertive' ng-click='UC.closeModal()'>Cancel</button></label>
+      <!-- <label class='item item-input item-stacked-label'><span class='input-label'>Position</span><input type='text' placeholder='Stat' ng-model='position'></label> -->
+
+      <label class='item item-stacked-label'>
+        <button class='button button-balanced button-medium left-side' ng-click='UC.submitStat(name, numerator, denominator, UC.color, position, UC.player_id)'>Add stat to this player</button>
+        <button class='button button-assertive right-side' ng-click='UC.closeModal()'>Cancel</button>
+      </label>
     </div>
   </ion-content>
-</ion-view>
+</ion-modal-view>

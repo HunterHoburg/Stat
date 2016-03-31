@@ -1,24 +1,34 @@
-<ion-view title='Something'>
-  <ion-header-bar><h2>&nbsp;Signup</h2></ion-header-bar>
-  <ion-content>
-    <div class='list'>
-      <label class='item item-input item-stacked-label'><span class='input-label'>User Name (You'll use this to sign in!)</span><input type='text' placeholder='Name' ng-model='name'></label>
+<ion-modal-view title='Something'>
+  <ion-header-bar class='background'><h2>&nbsp;Sign Up</h2></ion-header-bar>
+  <ion-content class='background'>
+    <div class='list lighter-background'>
+      <label class='item item-input item-floating-label'><span class='input-label'>Name</span><input type='text' placeholder="User Name (You'll use this to sign in!)" ng-model='name' ng-model-options='{debounce:700}' ng-change='UC.nameVerify(name)'></label>
 
-      <label class='item item-input item-stacked-label'><span class='input-label'> Email</span><input type='text' placeholder='Email' ng-model='email1'></label>
+      <label ng-if='!UC.nameFree' class='item item-floating-label'><span>Oops! That Username is Taken.</span></label>
 
-      <label ng-show='email1' class='item item-input item-stacked-label'><span class='input-label'> Please confirm email</span><input type='text' placeholder='Email' ng-model='email2'></label>
+      <label class='item item-input item-floating-label'><span class='input-label'> Email</span><input type='email' placeholder='Email' ng-model='email1' ng-model-options='{debounce:700}' class='lighter-background'></label>
 
-      <label class='item item-input item-stacked-label'><span class='input-label'> Password</span><input type='text' placeholder='Password' ng-model='password1'></label>
+      <label ng-show='email1' class='item item-input item-floating-label'><span class='input-label'> Email</span><input type='email' placeholder='Please confirm email' ng-model='email2' class='lighter-background'></label>
 
-      <label class='item item-input item-stacked-label' ng-show='password1'><span class='input-label'> Password</span><input type='text' placeholder='Password' ng-model='password2'></label>
+      <label ng-show='email2' class='item item-input item-floating-label'><span class='input-label'> Password</span><input type='password' placeholder='Password' ng-model='password1' class='lighter-background'></label>
+
+      <label class='item item-input item-floating-label' ng-show='password1'><span class='input-label'> Password</span><input type='password' placeholder='Confirm password please' ng-model='password2' ng-model-options='{debounce: 3000}' class='lighter-background'></label>
+
+      <label class='item' ng-show='password1 !== password2 && password2'><span>Uh Oh! Your passwords don't match.</span></label>
 
       <label class='item item-input'><button class="button" color-picker="" ng-model="UC.color" modal-title="Choose a color" model-mode='hex'  modal-class="vcc" color-box='{{UC.color}}' header-footer-class="bar-positive">
         {{ color || "Choose a color" }}
       </button><div class='card' style='background-color: UC.color'>
       </div></label>
 
-      <label class='item item-stacked-label'><button class='button button-balanced button-medium' ng-click='UC.signupSubmit(name, email1, email2, password1, password2, UC.color)'>Add {{name}}</button></label>
-      <label class='item item-stacked-label'><button class='button button-assertive' ng-click='UC.closeModal()'>Cancel</button></label>
+      <label class='item item-floating-label' ng-show='UC.nameFree && password1 === password2 && UC.color'>
+        <button class='button button-balanced button-medium left-side' ng-click='UC.signupSubmit(name, email1, email2, password1, password2, UC.color)'>
+          Add {{name}}
+        </button>
+        <button class='button button-assertive right-side' ng-click='UC.closeModal()'>
+          Cancel
+        </button>
+      </label>
     </div>
   </ion-content>
-</ion-view>
+</ion-modal-view>

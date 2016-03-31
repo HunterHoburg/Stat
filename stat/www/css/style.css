@@ -1,96 +1,131 @@
 /* Universal Classes */
+body {
+  font-family: 'Bitter', serif;
+}
+input {
+  width: 90%;
+}
 .title {
   text-align: center;
-  color: #95d565;
+  color: #840032;
+  font-size: 6rem;
+  margin-top: 3rem;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: bold;
+}
+.bitter {
+  font-family: 'Bitter', serif;
+}
+.background {
+  background-color: #E5DADA;
+}
+.lighter-background {
+  background-color: #f4efef;
+}
+.page-title {
+  color: #002642;
 }
 
-/* Classes for Splash Page */
-
-/*Test*/
-#chart svg {
-  height: 80px;
+.project-card {
+  margin: 2rem;
 }
-.spacer {
-  height: 1rem;
-  width: 100%;
-  opacity: 0;
+
+.player-name {
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 .increment {
   display: inline-block;
+  margin-left: .9rem;
+}
+#stat-number {
+  margin-left: 1rem;
+  font-weight: bold;
+  display: inline-block;
+  font-size: 23px;
+  vertical-align: center;
+  margin-top: .6rem;
 }
 .stat {
   display: inline-block;
 }
-.horizontal-spacer {
-  width: 20%;
-  display: inline-block;
+.stat-title {
+  font-weight: bold;
 }
 
 .login {
   text-align: center;
 }
-.loginButton {
-  /*position: absolute;*/
-  margin-top: 5rem;
-  background-color: #87c0e9;
-  color: #f6f6f6;
+.splash-button {
+  display: block;
   width: 30%;
-  height: 2rem;
-  margin-left: 35%;
-  text-align: center;
-  border-radius: 8px;
+  margin: 0 auto 2rem auto;
 }
-.loginBox {
-  text-align: center;
+.signin-button {
+  background-color: #002642;
+  color: #edebeb;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: bold;
 }
-.loginField {
-  margin-left: 30%;
-  text-align: center;
+.signup-button {
+  background-color: #E59500;
+  width: 33%;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: bold;
 }
-.signupButton {
-  /*position: absolute;*/
-  margin-top: 5rem;
-  background-color: #ade987;
-  color: #f6f6f6;
-  width: 30%;
-  height: 2rem;
-  margin-left: 35%;
-  text-align: center;
-  border-radius: 8px;
+.splash-sub {
+  color: #002642;
+  margin: 2rem;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: bold;
 }
-.signup {
-  text-align: center;
-}
-.signupBox {
+.splash-text {
+  background-color: #E5DADA;
+  border: none;
+  font-size: 18px;
   text-align: center;
 }
-.signupField {
-  margin-left: 30%;
+.splash-about-button {
+  font-family: 'Quicksand', sans-serif;
+  background-color: #f0f0f0;
+  width: 50%;
+  font-weight: bold;
+  margin-top: 6rem;
+  border: 2px solid #002642;
+}
+.splash-about-icon8 {
+  font-size: .5rem;
+}
+.spiral {
+  position: absolute;
+  vertical-align: center;
+  left: 46%;
+}
+.contact-info {
+  font-size: 1.3rem;
+  line-height: 2rem;
   text-align: center;
 }
-
-
-
-
-
-
-
+.contact-link {
+  color: #002642;
+  text-decoration: none;
+}
 
 /*TEST D3 STUFF*/
 
-.chart {
+/*.chart {
     background: #ffffff;
     padding: 3px;
-}
+}*/
 
-.chart div {
+/*.chart div {
   width: 0;
   transition: all 1s ease-out;
   -moz-transition: all 1s ease-out;
   -webkit-transition: all 1s ease-out;
-}
+}*/
 
-.chart div {
+/*.chart div {
   font: 10px sans-serif;
   background-color: steelblue;
   text-align: center;
@@ -100,33 +135,40 @@
   box-shadow: 2px 2px 2px #666;
 }*/
 
-/*
-.chart rect {
-  fill: steelblue;
+/*Margins and Centering*/
+.center {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
-
+.stat-padding {
+  margin: .5rem;
+}
+.left-side {
+  float: left;
+  margin: .8rem;
+}
+.right-side {
+  float: right;
+  margin: .8rem;
+}
+.center-side {
+  /*clear:both;*/
+  margin: 2rem;
+  text-align: center;
+}
+.project-button {
+  margin-top: 2rem;
+}
 
 /*.chart {
   background-color: #19fe29;
 }
 
-.chart .legend {
-  fill: black;
-  font: 14px sans-serif;
-  /*text-anchor: start;*/
-  font-size: 12px;
-}
-
-.chart text {
-  fill: white;
-  font: 10px sans-serif;
-  /*text-anchor: end;*/
-}
-
 .chart .label {
   fill: black;
   font: 14px sans-serif;
-  /*text-anchor: end;*/
+  text-anchor: end;
 }
 
 .bar:hover {

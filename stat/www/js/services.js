@@ -38,6 +38,9 @@ function playerSenderService() {
       player.stats = [];
       players.push(player);
   };
+  this.clearPlayers = function() {
+    players = [];
+  };
 
   this.setStats = function(stat) {
     for (var b = 0; b < players.length; b++) {

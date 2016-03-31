@@ -1,18 +1,20 @@
-<ion-view title='Something'>
-  <ion-header-bar><h2>&nbsp; Add Project</h2></ion-header-bar>
-  <ion-content>
-    <div class='list'>
+<ion-modal-view title='Something'>
+  <ion-header-bar class='background'><h2>&nbsp; Add Project</h2></ion-header-bar>
+  <ion-content class='background'>
+    <div class='list lighter-background'>
       <label class='item item-input item-stacked-label'><span class='input-label'>Project Name</span><input type='text' placeholder='Name' ng-model='name'></label>
 
       <label class='item item-input item-stacked-label'><span class='input-label'>1st Player</span><input type='text' placeholder='Player Name' ng-model='playerName'></label>
 
-      <label class='item item-input'><button class="button" color-picker="" ng-model="UC.color" modal-title="Choose a color" model-mode='hex'  modal-class="vcc" color-box='{{UC.color}}' header-footer-class="bar-positive">
+      <label class='item item-input lighter-background'><button class="button" color-picker="" ng-model="UC.color" modal-title="Choose a color" model-mode='hex'  modal-class="vcc" color-box='{{UC.color}}' header-footer-class="bar-positive">
         {{ color || "Choose a color" }}
       </button><div class='card' style='background-color: UC.color'>
       </div></label>
 
-      <label class='item item-stacked-label'><button class='button button-balanced button-medium' ng-click='UC.submitProject(name, UC.currentUser.user_id, playerName, UC.color)'>Add {{name}}</button></label>
-      <label class='item item-stacked-label'><button class='button button-assertive' ng-click='UC.closeModal()'>Cancel</button></label>
+      <label class='item item-stacked-label'>
+        <button class='button button-balanced button-medium left-side' ng-click='UC.submitProject(name, UC.currentUser.user_id, playerName, UC.color)'>Add {{name}}</button>
+        <button class='button button-assertive right-side' ng-click='UC.closeModal()'>Cancel</button>
+      </label>
     </div>
   </ion-content>
-</ion-view>
+</ion-modal-view>

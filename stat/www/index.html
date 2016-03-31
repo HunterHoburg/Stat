@@ -4,9 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title></title>
-
+    <link href='https://fonts.googleapis.com/css?family=Quicksand:400,700|Slabo+27px|Bitter|Rokkitt' rel='stylesheet' type='text/css'>
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
-    <link rel='stylesheet' href='lib/ionic-color-picker/ionic-color-picker/dist/ionic-color-picker.min.css'>
 
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
@@ -15,13 +14,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.css"/>
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
-    <script src='lib/ionic-color-picker/ionic-color-picker/dist/ionic-color-picker-tinycolor.min.js'></script>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-touch.min.js"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
 
     <!-- Data Visualization -->
     <script src="lib/d3/d3.js" charset="utf-8"></script>
     <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src='lib/ionic-color-picker/dist/ionic-color-picker.js'></script>
+    <link rel='stylesheet' href='lib/ionic-color-picker/dist/ionic-color-picker.css'>
+    <script src='lib/ionic-color-picker/dist/ionic-color-picker-tinycolor.js'></script>
     <script src="lib/nvd3/build/nv.d3.js"></script>
     <script src="lib/angular-nvd3/dist/angular-nvd3.js"></script>
     <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
@@ -46,7 +47,7 @@
     <link href="css/style.css" rel="stylesheet">
 
   </head>
-  <body ng-controller='UserController as UC'>
+  <body ng-controller='UserController as UC' ng-init='UC.resetProject(); UC.resetUser()'>
 
         <!-- <ion-header-bar class="bar-dark">
           <h1 class="title">STAT</h1>
